@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=.8">
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="drumkit.css">
+    <link rel="shortcut icon" href="drumpadfavicon.png" type="image/x-icon">
+    <title>drumPad</title>
+  </head>
+  <body>
+    <div class="row mt50 mb20">
+      <p class="text-center">keyBoard drumPad</p>
+    </div>
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+        <div class="row">
+          <div class="col-xs-4 pl6">
+            <div data-key="81" class="key">
+            <kbd>Q</kbd>
+            <span class="sound">ride</span>
+            </div>
+          </div>
+          <div class="col-xs-4 pl6">
+            <div data-key="87" class="key">
+              <kbd>W</kbd>
+              <span class="sound">tink</span>
+            </div>
+          </div>
+          <div class="col-xs-4 pl6">
+            <div data-key="69" class="key">
+              <kbd>E</kbd>
+              <span class="sound">tom</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4 pl6">
+            <div data-key="65" class="key">
+              <kbd>A</kbd>
+              <span class="sound">boom</span>
+            </div>
+          </div>
+          <div class="col-xs-4 pl6">
+            <div data-key="83" class="key">
+              <kbd>S</kbd>
+              <span class="sound">snare</span>
+            </div>
+          </div>
+          <div class="col-xs-4 pl6">
+            <div data-key="68" class="key">
+              <kbd>D</kbd>
+              <span class="sound">openhat</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4 pl6">
+            <div data-key="90" class="key">
+              <kbd>Z</kbd>
+              <span class="sound">kick</span>
+            </div>
+          </div>
+          <div class="col-xs-4 pl6">
+            <div data-key="88" class="key">
+              <kbd>X</kbd>
+              <span class="sound">clap</span>
+            </div>
+          </div>
+          <div class="col-xs-4 pl6">
+            <div data-key="67" class="key">
+              <kbd>C</kbd>
+              <span class="sound">hihat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt50">
+      <p class="text-center">created by Daniel - <a href="https://github.com/danielnilssoncole/drumkit" target="_blank">GitHub</a></p>
+    </div>
+    <audio data-key="88" src="sounds/clap.wav"></audio>
+    <audio data-key="67" src="sounds/hihat.wav"></audio>
+    <audio data-key="90" src="sounds/kick.wav"></audio>
+    <audio data-key="68" src="sounds/openhat.wav"></audio>
+    <audio data-key="65" src="sounds/boom.wav"></audio>
+    <audio data-key="81" src="sounds/ride.wav"></audio>
+    <audio data-key="83" src="sounds/snare.wav"></audio>
+    <audio data-key="69" src="sounds/tom.wav"></audio>
+    <audio data-key="87" src="sounds/tink.wav"></audio>
+
+    <script>
+    function playSound(e) {
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        if (!audio) return; //stops function from running
+        audio.currentTime = 0; //rewinds wav to start for repition
+        audio.play();
+        key.classList.add('playing');
+    }
+
+
+      function removeTransition(e) {
+        if (e.propertyName !== 'transform') return; //skip it if its not a transform
+        this.classList.remove('playing');
+      }
+
+      const keys = document.querySelectorAll('.key');
+      keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+      window.addEventListener('keydown', playSound);
+
+    </script>
+
+  </body>
+</html>
